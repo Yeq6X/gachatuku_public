@@ -1,0 +1,47 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/tw/**",
+        "function": "share"
+      },
+      {
+        "source": "/new_arrivals",
+        "function": "sharePage"
+      },
+      {
+        "source": "/ranking",
+        "function": "sharePage"
+      },
+      {
+        "source": "/app/**",
+        "function": "shareAppPage"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "cp dist/index.html functions/index.html"
+    ]
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

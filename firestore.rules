@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users_base/{userID} {
+      allow read: if true;
+      allow create, update: if isUserAuthenticated(userID);
+    }
+
+    match /users/{userID} {
+      allow read: if true;
+      allow create: if isUserAuthenticated(userID);
+      allow update: if incomingData().uid == existingData().uid
+                    && incomingData().displayName == existingData().displayName
+                    && incomingData().photoURL == existingData().photoURL
+                    && incomingData().username == existingData().username;
+    }
+
+    match /apps/{appID} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if incomingData().createDate == existingData().createDate
+                    && incomingData().gachaData == existingData().gachaData
+                    && incomingData().name == existingData().name
+                    && incomingData().uid == existingData().uid
+                    && incomingData().user == existingData().user;
+      allow delete: if isUserAuthor(appID);
+    }
+
+    match /tw/{shareID} {
+      allow read, create: if true;
+    }
+
+    match /dummy_for_time_get/{timeID} {
+      allow read, write: if true;
+    }
+
+
+
+    function documentPath(paths) {
+      return path([['databases', database, 'documents'].join('/'), paths.join('/')].join('/'));
+    }
+
+    function existingData() {
+      return resource.data;
+    }
+
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUserAuthenticated(userID) {
+      return request.auth.uid == userID;
+    }
+
+    function isUserAuthor(appID) {
+      return request.auth.uid == getAuthorID(appID);
+    }
+
+    function getAuthorID(appID) {
+      return getData(appRef(appID)).user.uid;
+    }
+
+    function appRef(appID) {
+      return documentPath(['apps', appID])
+    }
+    function getData(path) {
+      return get(path).data;
+    }
+  }
+}

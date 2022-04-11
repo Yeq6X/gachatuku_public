@@ -1,0 +1,36 @@
+.FlexTextarea {
+  position: relative;
+  font-size: 1rem;
+}
+
+.FlexTextarea__dummy {
+  overflow: hidden;
+  visibility: hidden;
+  box-sizing: border-box;
+  padding: 8px 15px;
+  min-height: 42px;
+  max-height: 168px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  border: 1px solid;
+}
+
+.FlexTextarea__textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: auto !important;
+  box-sizing: border-box;
+  padding: 8px 15px !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #fff;
+  border: 1px solid #ced4da;;
+  border-radius: 0.25rem;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  resize: none;
+}

@@ -1,0 +1,6 @@
+[{
+  "origin": ["https://gachatuku.com/", "https://o-gacha-maker.firebaseapp.com", "http://localhost:5000", "http://localhost:8081", "http://localhost:8080", "http://localhost:8081", "http://localhost:8083", "https://www.google.com/"],
+  "responseHeader": ["*"],
+  "method": ["GET"],
+  "maxAgeSeconds": 86400
+}]
